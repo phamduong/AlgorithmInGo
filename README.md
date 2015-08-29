@@ -1,1 +1,1 @@
-# algorithm
+# Algorithm in Go lang

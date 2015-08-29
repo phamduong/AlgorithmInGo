@@ -131,11 +131,63 @@ func CreateHeap(a []int, n int) {
 }
 
 func HeapSort(a []int, n int) {
-	var r int = n - 1
+	var r int = n - 1 //index of last element in array
 	CreateHeap(a, n)
-	for r > 1 { //attention here
+	for r > 0 { //attention here
 		a[r], a[0] = a[0], a[r]
-		r--
 		Shift(a, 0, r)
+		r--
+	}
+}
+
+//End Heap sort
+
+//Implement shell sort
+func ShellSort(a []int, n int, h []int) {
+	var k int = len(h)
+	var i, j, step, x, pos int
+
+	for i = 0; i < k; i++ {
+		step = h[i]
+		for j = step; j < n; j++ {
+			x = a[j]
+			pos = j - step
+			for pos >= 0 && a[pos] > x {
+				a[pos+step] = a[pos]
+				pos -= step
+			}
+			a[pos+step] = x
+		}
+	}
+}
+
+func QuickSort(a []int, l int, r int) {
+	var i, j, x int
+	x = a[(l+r)/2]
+	i = l
+	j = r
+
+	for i <= j {
+		for a[i] < x {
+			i++
+		}
+
+		for a[j] > x {
+			j--
+		}
+
+		if i <= j {
+			a[i], a[j] = a[j], a[i]
+			i++
+			j--
+		}
+	}
+
+	if l < j {
+		QuickSort(a, l, j)
+	}
+
+	if i < r {
+		QuickSort(a, i, r)
 	}
 }

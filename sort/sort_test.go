@@ -82,3 +82,26 @@ func TestHeapSort(t *testing.T) {
 
 	assert.Equal(expected, input, "Heap sort error")
 }
+
+func TestShellSort(t *testing.T) {
+	assert := assert.New(t)
+	var n int = fixture.RandomOneInt()
+	input := fixture.GenerateArray(n)
+	expected := fixture.GetExpectedResult(input)
+	step := []int{7, 5, 3, 1}
+
+	ShellSort(input, n, step)
+
+	assert.Equal(expected, input, "Shell sort error")
+}
+
+func TestQuickSort(t *testing.T) {
+	assert := assert.New(t)
+	var n int = fixture.RandomOneInt()
+	input := fixture.GenerateArray(n)
+	expected := fixture.GetExpectedResult(input)
+
+	QuickSort(input, 0, n-1)
+
+	assert.Equal(expected, input, "Quick sort error")
+}
