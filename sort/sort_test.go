@@ -1,7 +1,7 @@
 package sort
 
 import (
-	"github.com/phamduong/algorithm/fixture"
+	"github.com/phamduong/AlgorithmInGo/fixture"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -50,7 +50,7 @@ func TestInterchangeSort(t *testing.T) {
 	assert.Equal(expected, input, "Interchange sort error")
 }
 
-func TestBubleSort(t *testing.T) {
+func TestBubbleSort(t *testing.T) {
 	assert := assert.New(t)
 	var n int = fixture.RandomOneInt()
 	input := fixture.GenerateArray(n)
