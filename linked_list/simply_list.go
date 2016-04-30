@@ -2,36 +2,45 @@ package linked_list
 
 import "github.com/phamduong/AlgorithmInGo/cleaner"
 
+type Node struct {
+	data interface{}
+	next *Node
+}
+
+func (node Node) NewNode(data interface{}, next *Node) Node {
+	return Node{data, next}
+}
+
 type SimplyList struct {
-	Head, Tail *Node
+	head, tail *Node
 }
 
 func (list *SimplyList) AddFirst(node *Node) {
-	if list.Head == nil {
-		list.Head = node
-		list.Tail = list.Head
+	if list.head == nil {
+		list.head = node
+		list.tail = list.head
 	} else {
-		node.Next = list.Head
-		list.Head = node
+		node.next = list.head
+		list.head = node
 	}
 }
 
 func (list *SimplyList) AddLast(node *Node) {
-	if list.Head == nil {
-		list.Head = node
-		list.Tail = list.Head
+	if list.head == nil {
+		list.head = node
+		list.tail = list.head
 	} else {
-		list.Tail.Next = node
-		list.Tail = node
+		list.tail.next = node
+		list.tail = node
 	}
 }
 
 func (list *SimplyList) InsertAfter(node *Node, newNode *Node) {
 	if node != nil {
-		newNode.Next = node.Next
-		node.Next = newNode
-		if list.Tail == node {
-			list.Tail = newNode
+		newNode.next = node.next
+		node.next = newNode
+		if list.tail == node {
+			list.tail = newNode
 		}
 	} else {
 		list.AddFirst(newNode)
@@ -39,34 +48,34 @@ func (list *SimplyList) InsertAfter(node *Node, newNode *Node) {
 }
 
 func (list SimplyList) Search(x int) *Node {
-	var node *Node = list.Head
-	for node != nil && node.Data != x {
-		node = node.Next
+	var node *Node = list.head
+	for node != nil && node.data != x {
+		node = node.next
 	}
 
 	return node
 }
 
 func (list *SimplyList) RemoveHead() {
-	if list.Head != nil {
-		var node *Node = list.Head
-		list.Head = list.Head.Next
-		cleaner.Clear(*node)
-		if list.Head == nil {
-			list.Tail = nil
+	if list.head != nil {
+		var node *Node = list.head
+		list.head = list.head.next
+		cleaner.Clear(node)
+		if list.head == nil {
+			list.tail = nil
 		}
 	}
 }
 
 func (list *SimplyList) RemoveAfter(node *Node) {
 	if node != nil {
-		var temp *Node = node.Next
+		var temp *Node = node.next
 		if temp != nil {
-			if temp == list.Tail {
-				list.Tail = node
+			if temp == list.tail {
+				list.tail = node
 			}
-			node.Next = temp.Next
-			cleaner.Clear(*temp)
+			node.next = temp.next
+			cleaner.Clear(temp)
 		} else {
 			list.RemoveHead()
 		}
@@ -74,13 +83,13 @@ func (list *SimplyList) RemoveAfter(node *Node) {
 }
 
 func (list *SimplyList) RemoveNodeHasData(x int) int {
-	var p, q *Node = list.Head, nil
+	var p, q *Node = list.head, nil
 	for p != nil {
-		if p.Data == x {
+		if p.data == x {
 			break
 		}
 		q = p;
-		p = p.Next
+		p = p.next
 	}
 
 	if p == nil {
@@ -93,21 +102,21 @@ func (list *SimplyList) RemoveNodeHasData(x int) int {
 
 func (list *SimplyList) RemoveList() {
 	var node *Node
-	for list.Head != nil {
-		node = list.Head
-		list.Head = list.Head.Next
+	for list.head != nil {
+		node = list.head
+		list.head = list.head.next
 		cleaner.Clear(node)
 	}
-	list.Tail = nil
+	list.tail = nil
 }
 
-func (list *SimplyList) ToArray() []int {
-	var s []int
-	var node *Node = list.Head
+func (list *SimplyList) ToArray() []interface{} {
+	var s []interface{}
+	var node *Node = list.head
 
 	for node != nil {
-		s = append(s, node.Data)
-		node = node.Next
+		s = append(s, node.data)
+		node = node.next
 	}
 
 	return s
