@@ -17,12 +17,21 @@ func (queue Queue) NewEmptyQueue() Queue {
 	return Queue{}
 }
 
-func (queue Queue) EnQueue(value interface{}) {
+func (queue *Queue) EnQueue(value interface{}) {
 	ele := &Element{value, nil}
-	queue.tail.next, queue.tail = ele, ele
+
+	if queue.tail != nil {
+		queue.tail.next = ele
+	}
+	
+	queue.tail = ele
+
+	if queue.head == nil {
+		queue.head = queue.tail
+	}
 }
 
-func (queue Queue) DeQueue() *Element {
+func (queue *Queue) DeQueue() *Element {
 	if queue.head != nil {
 		ele := queue.head
 		queue.head = queue.head.next
@@ -31,10 +40,10 @@ func (queue Queue) DeQueue() *Element {
 	return nil
 }
 
-func (queue Queue) IsEmpty() bool {
+func (queue *Queue) IsEmpty() bool {
 	return queue.head == nil
 }
 
-func (queue Queue) Front() *Element {
+func (queue *Queue) Front() *Element {
 	return queue.head
 }
